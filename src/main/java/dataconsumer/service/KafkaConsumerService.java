@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.common.math.Quantiles;
-import com.mongodb.QueryBuilder;
 import dataconsumer.model.DataPoint;
 import dataconsumer.repository.DataPointRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -47,9 +46,6 @@ public class KafkaConsumerService {
                     .timestamp(Calendar.getInstance().getTimeInMillis())
                     .build();
             dataPointRepository.save(dataPoint);
-
-//            QueryBuilder queryBuilder = QueryBuilder.start().
-            mongoTemplate.find(null, null);
         } catch (JsonProcessingException e) {
             log.error("JSON unmarshalling error occurred while parsing message {}, {}", message, e);
         }

@@ -1,15 +1,14 @@
 package dataconsumer.controller;
 
 import dataconsumer.config.SwaggerConfig;
-import dataconsumer.dto.request.DataPointRequestDTO;
 import dataconsumer.dto.response.DataPointResponseDTO;
 import dataconsumer.service.DataPointService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,18 +26,22 @@ public class DataPointController {
         this.dataPointService = dataPointService;
     }
 
-    @PostMapping(value = "")
-    @ApiOperation(value = "${DataPointController.create}", response = DataPointResponseDTO.class)
+    @GetMapping(value = "")
+    @ApiOperation(value = "${DataPointController.get}", response = DataPointResponseDTO.class)
     @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Something went wrong")
     })
-    public DataPointResponseDTO create(@ApiParam("Data Point Details") @RequestBody DataPointRequestDTO dataPointRequestDTO) {
-        log.info("Handling POST request on path => {}", PATH_DATA_POINTS);
-        log.info("Request body => {}", dataPointRequestDTO);
+    public DataPointResponseDTO get(
+            @ApiParam(value = "Publisher", example = "pub-1") @RequestParam String publisher,
+            @ApiParam(value = "Reading bucket size", example = "10") @RequestParam Integer dataSize) {
+        log.info("Handling GET request on path => {}", PATH_DATA_POINTS);
+        log.info("Request params: publisher => {}, dataSize => {}", publisher, dataSize);
 
-        final DataPointResponseDTO userResponseDto = dataPointService.handleGet(dataPointRequestDTO);
+        final DataPointResponseDTO dataPointsResponseDTO = DataPointResponseDTO.builder()
+                .dataPoints(dataPointService.handleGet(publisher, dataSize))
+                .build();
 
-        log.info("Response => {}", userResponseDto);
-        return userResponseDto;
+        log.info("Response => {}", dataPointsResponseDTO);
+        return dataPointsResponseDTO;
     }
 }

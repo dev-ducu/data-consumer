@@ -1,14 +1,13 @@
 package dataconsumer.repository;
 
 import dataconsumer.model.DataPoint;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.QueryByExampleExecutor;
 
-import java.util.List;
+public interface DataPointRepository extends CrudRepository<DataPoint, Long>, QueryByExampleExecutor<DataPoint> {
 
-public interface DataPointRepository extends MongoRepository<DataPoint, Long> {
-
-    @Query("{ $query: {publisher: $0}, $orderby: {$natural : -1} }")
-    List<DataPoint> findLastNEntriesOfPublisher(String publisher, int n);
-
+    <S extends DataPoint> Page<S> findAll(Example<S> example, Pageable pageable);
 }

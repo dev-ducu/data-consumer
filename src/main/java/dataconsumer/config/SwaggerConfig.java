@@ -30,15 +30,15 @@ public class SwaggerConfig {
                 .build()
                 .apiInfo(metadata())
                 .useDefaultResponseMessages(false)
-                .tags(new Tag(TAG_DATA_POINTS, "Data points operations (create data points, etc)"))
+                .tags(new Tag(TAG_DATA_POINTS, "Get data points"))
                 .genericModelSubstitutes(Optional.class);
     }
 
     private ApiInfo metadata() {
         return new ApiInfoBuilder()
-                .title("Data Producer Service API")
-                .description("This is the Data Producer Service REST API. " +
-                        "The service context is <b>/data-points</b>, so make sure  that all REST requests URLs start with that.")
+                .title("Data Consumer Service API")
+                .description("This is the Data Consumer Service, exposing a REST API for database reading. " +
+                        "The service context is <b>/data-consumer</b>, so make sure  that all REST requests URLs start with that.")
                 .version("1.0.0")
                 .build();
     }

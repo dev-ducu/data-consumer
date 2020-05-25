@@ -1,5 +1,6 @@
 package dataconsumer.dto.response;
 
+import dataconsumer.model.DataPoint;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Validated
 @Data
@@ -16,7 +17,6 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class DataPointResponseDTO {
 
-    @NotBlank
-    @ApiModelProperty(position = 0)
-    private String message;
+    @ApiModelProperty()
+    private List<DataPoint> dataPoints;
 }

@@ -9,8 +9,8 @@ public class MongoConfig {
 
     private MongoClient mongoClient;
 
-     @Bean
-     public MongoClient mongoClient() {
+    @Bean
+    public MongoClient mongoClient() {
         mongoClient = MongoClients.create("mongodb://localhost:27017");
         return mongoClient;
     }
